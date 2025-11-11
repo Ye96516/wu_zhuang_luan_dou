@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx5jsh6f7g6a0"]
+
+[ext_resource type="Script" uid="uid://12a2mwn8p8d3" path="res://scenes/parrallax/parallax_background.gd" id="1_5lyjd"]
+[ext_resource type="Texture2D" uid="uid://b8kkmavp1cuhw" path="res://art/rabbit_forest/Assets/background.png" id="1_gfuif"]
+[ext_resource type="Texture2D" uid="uid://f1ww7yd5s7kx" path="res://art/rabbit_forest/Assets/middleground.png" id="2_35wf0"]
+[ext_resource type="Texture2D" uid="uid://dees8rx1g0t0y" path="res://art/hero/background/background_layer_1.png" id="4_63qg3"]
+[ext_resource type="Texture2D" uid="uid://b6i1mr0s0b7t3" path="res://art/hero/background/background_layer_2.png" id="5_ixrd0"]
+[ext_resource type="Texture2D" uid="uid://bcqs4rv3ttmw0" path="res://art/hero/background/background_layer_3.png" id="6_mll5f"]
+
+[node name="Parallax" type="Node2D"]
+script = ExtResource("1_5lyjd")
+background = "暗森林"
+
+[node name="Green" type="Node2D" parent="."]
+visible = false
+
+[node name="GreenLS" type="Parallax2D" parent="Green"]
+scroll_scale = Vector2(0.4, 0)
+repeat_size = Vector2(1728, 0)
+repeat_times = 3
+
+[node name="TextureRect" type="TextureRect" parent="Green/GreenLS"]
+offset_right = 1991.0
+offset_bottom = 1080.0
+scale = Vector2(2, 1)
+texture = ExtResource("1_gfuif")
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="GreenMS" type="Parallax2D" parent="Green"]
+scroll_scale = Vector2(0.8, 0)
+repeat_size = Vector2(1728, 0)
+repeat_times = 3
+
+[node name="TextureRect" type="TextureRect" parent="Green/GreenMS"]
+offset_right = 1731.0
+offset_bottom = 1181.0
+texture = ExtResource("2_35wf0")
+stretch_mode = 4
+
+[node name="Dark" type="Node2D" parent="."]
+
+[node name="LS" type="Parallax2D" parent="Dark"]
+scroll_scale = Vector2(0.3, 1)
+repeat_size = Vector2(1919, 0)
+repeat_times = 3
+
+[node name="TextureRect" type="TextureRect" parent="Dark/LS"]
+offset_right = 1919.0
+offset_bottom = 1186.0
+texture = ExtResource("4_63qg3")
+stretch_mode = 4
+
+[node name="MS" type="Parallax2D" parent="Dark"]
+scroll_scale = Vector2(0.6, 1)
+repeat_size = Vector2(1919, 0)
+repeat_times = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Dark/MS"]
+offset_right = 1919.0
+offset_bottom = 1186.0
+texture = ExtResource("5_ixrd0")
+stretch_mode = 4
+
+[node name="CU" type="Parallax2D" parent="Dark"]
+scroll_scale = Vector2(0.85, 1)
+repeat_size = Vector2(1919, 0)
+repeat_times = 3
+
+[node name="TextureRect3" type="TextureRect" parent="Dark/CU"]
+offset_right = 1919.0
+offset_bottom = 1186.0
+texture = ExtResource("6_mll5f")
+stretch_mode = 4

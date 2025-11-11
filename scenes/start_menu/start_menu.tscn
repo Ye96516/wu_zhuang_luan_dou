@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://vid342kmxe2f"]
+
+[ext_resource type="Script" uid="uid://wsk7q50ra7cs" path="res://scenes/start_menu/camera_2d.gd" id="1_ces3l"]
+[ext_resource type="Script" uid="uid://den3rxwi1c7ed" path="res://scenes/start_menu/start_menu.gd" id="1_ujype"]
+[ext_resource type="PackedScene" uid="uid://cx5jsh6f7g6a0" path="res://scenes/parrallax/parallax_background.tscn" id="2_uqtq5"]
+[ext_resource type="Texture2D" uid="uid://qhgyyv2vpc1w" path="res://art/rabbit_forest/Assets/props.png" id="4_ifyap"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ujype")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 541)
+script = ExtResource("1_ces3l")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("2_uqtq5")]
+background = "绿森林"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Start" type="Button" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -206.0
+offset_top = 672.0
+offset_right = 255.0
+offset_bottom = 835.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 90
+text = "开始游戏"
+
+[node name="Name" type="Label" parent="CanvasLayer"]
+offset_left = 348.0
+offset_top = 241.0
+offset_right = 1569.0
+offset_bottom = 416.0
+theme_override_font_sizes/font_size = 128
+text = "武装乱斗"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Grass" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(127, 949)
+scale = Vector2(6.342341, 6.2753515)
+texture = ExtResource("4_ifyap")
+region_enabled = true
+region_rect = Rect2(52.412888, 35.38632, 46.087112, 49.36368)
+
+[node name="Meshroom" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1630, 948.00006)
+scale = Vector2(8.361025, 8.272714)
+texture = ExtResource("4_ifyap")
+region_enabled = true
+region_rect = Rect2(4.231243, 112.50458, 58.264458, 32.231415)
+
+[node name="Vine" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1622, 191)
+scale = Vector2(8.072222, 7.829317)
+texture = ExtResource("4_ifyap")
+region_enabled = true
+region_rect = Rect2(56.710575, 91.4302, 56.61157, 58.264458)
+
+[connection signal="pressed" from="CanvasLayer/Start" to="." method="_on_start_pressed"]
