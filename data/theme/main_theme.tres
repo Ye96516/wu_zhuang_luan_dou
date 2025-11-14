@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bcnfl1myp7dt0"]
+
+[ext_resource type="FontFile" uid="uid://c62d4rqemmh3j" path="res://art/font/x12y16MyMaruMonica-20251024.ttf" id="1_0ebfi"]
+
+[resource]
+Button/fonts/font = ExtResource("1_0ebfi")
+Label/fonts/font = ExtResource("1_0ebfi")
+RichTextLabel/fonts/normal_font = ExtResource("1_0ebfi")

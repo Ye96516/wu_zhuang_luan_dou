@@ -16,6 +16,8 @@ func exit() -> void:
 func process_update(_delta: float) -> void:
 	if player.is_on_floor():
 		state_machine.change_state("Idle")
+	if Input.is_action_just_pressed("atk"):
+		state_machine.change_state("Attack")
 	pass
 
 ## 物理帧触发
