@@ -1,0 +1,91 @@
+@tool
+class_name AgentChatMessageItem
+extends MarginContainer
+
+@onready var content_container: VBoxContainer = %ContentContainer
+@onready var think_container: VBoxContainer = %ThinkContainer
+@onready var think_content: RichTextLabel = %ThinkContent
+@onready var message_container: VBoxContainer = %MessageContainer
+@onready var message_content: RichTextLabel = %MessageContent
+@onready var user_message_container: VBoxContainer = %UserMessageContainer
+@onready var user_message_content: RichTextLabel = %UserMessageContent
+
+@onready var thinking_time_label: Label = %ThinkingTimeLabel
+@onready var thinking_label: Label = %ThinkingLabel
+@onready var expand_button: Button = %ExpandButton
+@onready var use_tool_container: VBoxContainer = %UseToolContainer
+@onready var wait_using_tool: PanelContainer = %WaitUsingTool
+@onready var wait_using_tool_rich_text_label: RichTextLabel = %WaitUsingTool/RichTextLabel
+
+@export var show_think: bool = false
+
+var thinking: bool = false
+
+var think_time: float = 0.0
+
+func _ready() -> void:
+	expand_button.toggled.connect(_on_expand_button_toggled)
+	think_container.visible = show_think
+	think_time = 0.0
+	message_content.meta_clicked.connect(on_click_rich_text_url)
+
+func _process(delta: float) -> void:
+	if thinking:
+		think_time += delta
+		thinking_time_label.text = "%.1f s" % think_time
+
+func update_think_content(text: String):
+	thinking = true
+	think_container.show()
+	think_content.text = text
+
+func update_message_content(text: String):
+	thinking = false
+	if show_think:
+		thinking_label.text = "思考了"
+	message_content.text = text
+	if message_content.text.trim_prefix(" ") != "":
+		message_container.show()
+		message_content.show()
+
+func update_user_message_content(text: String):
+	user_message_container.show()
+	user_message_content.show()
+	user_message_content.text = text
+
+func _on_expand_button_toggled(toggled_on: bool) -> void:
+	expand_button.text = " ▲ " if toggled_on else " ▼ "
+	think_content.visible = toggled_on
+
+func response_use_tool():
+	wait_using_tool.show()
+
+	var wait_placeholder_text = [
+		" 正在等待 Agent 调用工具，请耐心等待 "
+	]
+	wait_using_tool_rich_text_label.text = "[agent_thinking freq=5.0 span=5.0] %s [/agent_thinking]" % wait_placeholder_text.pick_random()
+
+func used_tools(tool_calls: Array[DeepSeekChatStream.ToolCallsInfo]):
+	wait_using_tool.hide()
+	for tool in tool_calls:
+		var panel = PanelContainer.new()
+		var stylebox = StyleBoxFlat.new()
+		stylebox.bg_color = Color("#202020")
+		panel.add_theme_stylebox_override("panel", stylebox)
+		var label = Label.new()
+		panel.add_child(label)
+		use_tool_container.add_child(panel)
+		label.text = "调用工具 " + tool.function.name
+
+func on_click_rich_text_url(meta):
+	var meta_string = str(meta)
+	if meta_string.begins_with("{") and meta_string.ends_with("}"):
+		var json = JSON.parse_string(meta_string)
+		var path: String = json.path
+		if path.ends_with(".tscn") or path.ends_with(".gd") or path.ends_with(".gdshader") or path.ends_with(".md") or path.ends_with(".txt") or path.ends_with(".res") or path.ends_with(".tres"):
+			var resource = load(path)
+			EditorInterface.edit_resource(resource)
+	elif meta_string.begins_with("http"):
+		OS.shell_open(meta_string)
+	else:
+		print("不支持的跳转方式，您可以复制链接后自行跳转： ", meta)

@@ -3,6 +3,8 @@ class_name Player extends CharacterBody2D
 @export var stat:Stats
 
 @onready var label: Label =%Label
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
+
 const font = preload("uid://c62d4rqemmh3j")
 var label_setting:LabelSettings
 
@@ -45,14 +47,14 @@ func _label_show(tex:String):
 	current_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	current_label.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
 	current_label.size=Vector2(500,23)
-	current_label.position=Vector2(-43,-50)
+	current_label.position=Vector2(-current_label.size.x/2,-58)
 	current_label.modulate.a=1
 	current_label.text=tex
 	#控制动画
 	var t:Tween=get_tree().create_tween()
 	t.tween_property(current_label,"modulate:a",0,3)
 	t.set_parallel()
-	t.tween_property(current_label,"position",Vector2(-43,-200),3)
+	t.tween_property(current_label,"position",Vector2(-current_label.size.x/2,-200),3)
 	await  t.finished
 	#销毁
 	current_label.queue_free()
