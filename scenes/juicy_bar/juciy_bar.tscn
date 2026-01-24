@@ -1,29 +1,26 @@
-[gd_scene load_steps=6 format=3 uid="uid://bq0mwjrj4rnvo"]
+[gd_scene load_steps=8 format=3 uid="uid://bq0mwjrj4rnvo"]
 
 [ext_resource type="Script" uid="uid://06eo3twu7y7b" path="res://scenes/juicy_bar/juciy_bar.gd" id="1_3kof2"]
+[ext_resource type="Texture2D" uid="uid://voifyf3rvkyo" path="res://art/ui/health_bar/精灵-0005.png" id="3_15g31"]
+[ext_resource type="Texture2D" uid="uid://dfl8vt0ncxf0w" path="res://art/ui/health_bar/精灵-0004.png" id="4_s645x"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cr1so"]
-bg_color = Color(0.14509805, 0.17254902, 0.17254902, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s645x"]
+texture = ExtResource("3_15g31")
+texture_margin_left = 12.0
+texture_margin_right = 12.0
+modulate_color = Color(0.08235294, 0.11764706, 0.11764706, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buh8q"]
-bg_color = Color(0.9411765, 0.8117647, 0.17254902, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_70fg2"]
+texture = ExtResource("3_15g31")
+texture_margin_left = 12.0
+texture_margin_right = 12.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15g31"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s645x"]
-bg_color = Color(0.8862745, 0.17254902, 0.19215687, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_buh8q"]
+texture = ExtResource("4_s645x")
+texture_margin_left = 12.0
+texture_margin_right = 12.0
 
 [node name="JuciyBar" type="Control" node_paths=PackedStringArray("top_layer_bar", "bottom_layer_bar")]
 layout_mode = 3
@@ -42,8 +39,9 @@ bottom_layer_bar = NodePath("BottomBar")
 layout_mode = 0
 offset_right = 226.0
 offset_bottom = 27.0
-theme_override_styles/background = SubResource("StyleBoxFlat_cr1so")
-theme_override_styles/fill = SubResource("StyleBoxFlat_buh8q")
+theme_override_styles/background = SubResource("StyleBoxTexture_s645x")
+theme_override_styles/fill = SubResource("StyleBoxTexture_70fg2")
+value = 50.0
 show_percentage = false
 
 [node name="TopBar" type="ProgressBar" parent="."]
@@ -51,6 +49,6 @@ layout_mode = 0
 offset_right = 226.0
 offset_bottom = 27.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_15g31")
-theme_override_styles/fill = SubResource("StyleBoxFlat_s645x")
-value = 20.0
+theme_override_styles/fill = SubResource("StyleBoxTexture_buh8q")
+value = 50.0
 show_percentage = false
