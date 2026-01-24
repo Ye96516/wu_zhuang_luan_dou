@@ -35,5 +35,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.
 
 
-func _on_atk_body_entered(_body: Node2D) -> void:
+func _on_atk_body_entered(body: Node2D) -> void:
+	#print(body.name)
+	if body.is_in_group("enemy"):
+		print("aaaajjjj")
+		var atk:StatBuff=StatBuff.new(Stats.BuffableStats.health\
+		,-player.stat.current_attack,StatBuff.BuffType.add)
+		body.stat.add_buff(atk)
+		print(body.stat.health)
+		pass
 	pass # Replace with function body.

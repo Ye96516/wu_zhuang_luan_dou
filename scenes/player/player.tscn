@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://blnx0r10rprtm"]
+[gd_scene load_steps=67 format=3 uid="uid://blnx0r10rprtm"]
 
 [ext_resource type="Script" uid="uid://bprnvrjq6a0o" path="res://scenes/player/player.gd" id="1_myrg7"]
 [ext_resource type="Script" uid="uid://b1n3ebufmi5bo" path="res://scripts/buff_system/stats.gd" id="2_kvlxm"]
@@ -9,20 +9,20 @@
 [ext_resource type="Texture2D" uid="uid://cp0rlg618w7oj" path="res://art/Soldier/Soldier-Idle.png" id="7_yj68g"]
 [ext_resource type="Texture2D" uid="uid://shpyp2jytlay" path="res://art/Soldier/Soldier-Walk.png" id="8_ioxgp"]
 [ext_resource type="Script" uid="uid://cwou0iticoms2" path="res://scripts/state_meshine/state_meshine.gd" id="9_cnsyf"]
+[ext_resource type="Script" uid="uid://b151obl41kmxl" path="res://scenes/player/canvas_layer.gd" id="9_myrg7"]
 [ext_resource type="Script" uid="uid://b3twiw8gt6ie7" path="res://scenes/player/state_meshine/idle.gd" id="10_007i1"]
+[ext_resource type="PackedScene" uid="uid://bq0mwjrj4rnvo" path="res://scenes/juicy_bar/juciy_bar.tscn" id="10_kvlxm"]
 [ext_resource type="Script" uid="uid://kpa61n34idgn" path="res://scenes/player/state_meshine/run.gd" id="11_6cv16"]
 [ext_resource type="Script" uid="uid://djhgjph1pmdh8" path="res://scenes/player/state_meshine/attack.gd" id="12_j4nxn"]
 [ext_resource type="Script" uid="uid://culmep4syst0n" path="res://scenes/player/state_meshine/jump.gd" id="13_28m0y"]
 [ext_resource type="Script" uid="uid://7cn8lvhsvrtt" path="res://scenes/player/state_meshine/hurt.gd" id="14_uniwh"]
 [ext_resource type="Script" uid="uid://dvqoqa280cs2h" path="res://scenes/player/state_meshine/death.gd" id="15_iqsei"]
-[ext_resource type="Script" uid="uid://ceyon5v05qpta" path="res://scenes/player/label.gd" id="16_tffgl"]
 
-[sub_resource type="Resource" id="Resource_0i4b6"]
+[sub_resource type="Resource" id="Resource_kvlxm"]
 script = ExtResource("2_kvlxm")
-speed = 400.0
-base_max_health = 10.0
-base_defense = 2.0
-base_attack = 5.0
+jump_speed = -500.0
+current_max_health = 200.0
+current_attack = 10.0
 metadata/_custom_type_script = "uid://b1n3ebufmi5bo"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6nba5"]
@@ -296,12 +296,27 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_err40"]
+radius = 5.333336
+height = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
+atlas = ExtResource("7_yj68g")
+region = Rect2(41, 39, 15, 18)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5wq2"]
+radius = 31.0
+height = 68.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7s0f"]
+size = Vector2(22, 65)
+
 [sub_resource type="Animation" id="Animation_i3ckl"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/StateMachine/Attack/Atk:monitorable")
+tracks/0/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -313,7 +328,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/StateMachine/Attack/Atk:monitoring")
+tracks/1/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D2:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -328,7 +343,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:animation")
+tracks/0/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -340,7 +355,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:frame")
+tracks/1/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -352,26 +367,26 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Should/StateMachine/Attack/Atk:monitorable")
+tracks/2/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.3014531, 0.4984733),
+"times": PackedFloat32Array(0.10424339, 0.51010907),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, false]
+"values": [false, true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Should/StateMachine/Attack/Atk:monitoring")
+tracks/3/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D2:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.301278, 0.4984733),
+"times": PackedFloat32Array(0.10424339, 0.51010907),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, false]
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_ufqgx"]
@@ -380,7 +395,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:frame")
+tracks/0/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -392,7 +407,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:animation")
+tracks/1/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -407,7 +422,7 @@ length = 0.75
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:frame")
+tracks/0/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -419,7 +434,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:animation")
+tracks/1/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -431,7 +446,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Should/Soldier:frame")
+tracks/2/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/2/interp = 0
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -446,7 +461,7 @@ length = 0.5714286
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:frame")
+tracks/0/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -458,7 +473,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:animation")
+tracks/1/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -474,7 +489,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:frame")
+tracks/0/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -486,7 +501,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:animation")
+tracks/1/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -505,7 +520,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Should/Soldier:frame")
+tracks/0/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -517,7 +532,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Should/Soldier:animation")
+tracks/1/path = NodePath("ShouldFlip/Soldier:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -539,114 +554,143 @@ _data = {
 &"run": SubResource("Animation_7p0bi")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5wq2"]
-radius = 31.0
-height = 68.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7s0f"]
-size = Vector2(22, 65)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_err40"]
-radius = 5.333336
-height = 16.0
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_myrg7")
-stat = SubResource("Resource_0i4b6")
+stat = SubResource("Resource_kvlxm")
 
-[node name="Should" type="Node2D" parent="."]
+[node name="ShouldFlip" type="Node2D" parent="."]
+unique_name_in_owner = true
 
-[node name="Soldier" type="AnimatedSprite2D" parent="Should"]
+[node name="Soldier" type="AnimatedSprite2D" parent="ShouldFlip"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_rt1l8")
-animation = &"atk"
-frame = 5
+animation = &"idle"
+frame = 3
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Should/Soldier"]
-root_node = NodePath("../../..")
-libraries = {
-&"": SubResource("AnimationLibrary_m8h78")
-}
-
-[node name="StateMachine" type="Node2D" parent="Should" node_paths=PackedStringArray("current_state")]
-script = ExtResource("9_cnsyf")
-current_state = NodePath("Idle")
-metadata/_custom_type_script = "uid://cwou0iticoms2"
-
-[node name="Idle" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("10_007i1")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Run" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("11_6cv16")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Attack" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("12_j4nxn")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Atk" type="Area2D" parent="Should/StateMachine/Attack"]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Should/StateMachine/Attack/Atk"]
-position = Vector2(26, 0)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_c5wq2")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Should/StateMachine/Attack/Atk"]
-position = Vector2(-9.5, 20)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_n7s0f")
-
-[node name="Jump" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("13_28m0y")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Hurt" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("14_uniwh")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Death" type="Node2D" parent="Should/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("15_iqsei")
-player = NodePath("../../..")
-an = NodePath("../../Soldier")
-anp = NodePath("../../Soldier/AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -3)
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_err40")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("9_myrg7")
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="LeftTopUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/LeftTopUI"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 4.0
+offset_right = 17.0
+offset_bottom = 44.0
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_kvlxm")
+stretch_mode = 2
+
+[node name="HPBar" parent="CanvasLayer/LeftTopUI" instance=ExtResource("10_kvlxm")]
 unique_name_in_owner = true
-process_mode = 4
-offset_left = -41.0
-offset_top = -56.0
-offset_right = 61.0
-offset_bottom = -33.0
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("16_tffgl")
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 70.0
+offset_top = 44.0
+offset_right = 296.0
+offset_bottom = 72.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[connection signal="animation_finished" from="Should/Soldier/AnimationPlayer" to="Should/StateMachine/Attack" method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="Should/StateMachine/Attack/Atk" to="Should/StateMachine/Attack" method="_on_atk_body_entered"]
+[node name="HP" type="Label" parent="CanvasLayer/LeftTopUI"]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 6.0
+offset_right = 125.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 32
+text = "HP"
+
+[node name="HPValue" type="RichTextLabel" parent="CanvasLayer/LeftTopUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 182.0
+offset_top = 7.0
+offset_right = 294.0
+offset_bottom = 39.0
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "1000/1000"
+horizontal_alignment = 2
+
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("9_cnsyf")
+current_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://cwou0iticoms2"
+
+[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("10_007i1")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Run" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("11_6cv16")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Attack" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("12_j4nxn")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Atk" type="Area2D" parent="StateMachine/Attack"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StateMachine/Attack/Atk"]
+position = Vector2(26, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_c5wq2")
+disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StateMachine/Attack/Atk"]
+position = Vector2(-9.5, 20)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_n7s0f")
+disabled = true
+
+[node name="Jump" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("13_28m0y")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Hurt" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("14_uniwh")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Death" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("15_iqsei")
+player = NodePath("../..")
+an = NodePath("../../ShouldFlip/Soldier")
+anp = NodePath("../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_m8h78")
+}
+
+[connection signal="body_entered" from="StateMachine/Attack/Atk" to="StateMachine/Attack" method="_on_atk_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_player_animation_finished"]

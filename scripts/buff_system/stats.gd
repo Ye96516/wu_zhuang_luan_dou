@@ -6,15 +6,16 @@ enum BuffableStats{
 	current_defense,
 	current_attack,
 	speed,
+	health,
 }
 
-const stat_curves:Dictionary[BuffableStats,Curve]={
-	BuffableStats.current_max_health:preload("uid://3vch3h8vn8nn"),
-	BuffableStats.current_defense:preload("uid://4cbidtfvw2ml"),
-	BuffableStats.current_attack:preload("uid://dd4dk1qiprft1")
-}
+#const stat_curves:Dictionary[BuffableStats,Curve]={
+	#BuffableStats.current_max_health:preload("uid://3vch3h8vn8nn"),
+	#BuffableStats.current_defense:preload("uid://4cbidtfvw2ml"),
+	#BuffableStats.current_attack:preload("uid://dd4dk1qiprft1")
+#}
 
-const base_level_xp:float=100
+#const base_level_xp:float=100
 
 signal health_depleted
 signal health_changed(current_health:float,max_health:float)
@@ -22,23 +23,25 @@ signal attri_change(n:String,v:float,flag:StatBuff.BuffType)
 
 @export var speed:float=200
 @export var jump_speed:float=-350
-@export var base_max_health:float
-@export var base_defense:float
-@export var base_attack:float
-@export var experience:float=0:set=_experience_set
+#@export var base_max_health:float
+#@export var base_defense:float
+#@export var base_attack:float
 
-var level:int:
-	get():return floor(sqrt(experience/base_level_xp)+0.5)
-var current_max_health:float
-var current_defense:float
-var current_attack:float
-var health:float=0:set=_health_set
+#@export var experience:float=0:set=_experience_set
+
+#var level:int:
+	#get():return floor(sqrt(experience/base_level_xp)+0.5)
+@export var current_max_health:float
+@export var current_defense:float
+@export var current_attack:float
+
+@export var health:float=0:set=_health_set
 
 var stat_buffs:Array[StatBuff]
 
 func _init() -> void:
-	
 	recaculate_stats()
+	#print(current_max_health)
 	setup_stats.call_deferred()
 
 func setup_stats():
@@ -47,19 +50,19 @@ func setup_stats():
 func _health_set(v:float):
 	health=clampf(v,0,current_max_health)
 	health_changed.emit(health,current_max_health)
+	#print(v,"stats")
 	if health<=0:
 		health_depleted.emit()
 
-func _experience_set(v:float):
-	var old_level:int=level
-	experience=v
-	
-	if not old_level==level:
-		recaculate_stats()
+#func _experience_set(v:float):
+	#var old_level:int=level
+	#experience=v
+	#
+	#if not old_level==level:
+		#recaculate_stats()
 
 func add_buff(buff:StatBuff):
 	stat_buffs.append(buff)
-
 	recaculate_stats()
 	
 func remove_buff(buff:StatBuff):
@@ -73,8 +76,10 @@ func recaculate_stats():
 	var stat_addends:Dictionary={}
 	
 	for buff in stat_buffs:
+		#这样写的目的是获取字符串类型的属性，而非枚举(int)类型的属性
 		var stat_name:String=BuffableStats.keys()[buff.stat]
-		#print(stat_name,"75d")
+#["current_max_health", "current_defense", "current_attack", "speed"] 0
+		#printt(BuffableStats.keys(),buff.stat)
 		match buff.buff_type:
 			StatBuff.BuffType.add:
 				stat_addends[stat_name]=0.0
@@ -91,16 +96,16 @@ func recaculate_stats():
 				if stat_multipliers[stat_name]<0.0:
 					stat_multipliers[stat_name]=0.0
 	##先计算好当前的基础属性，当前的基础属性为基础属性乘以曲线比例
-	var curve_level_pos:float=(float(level)/100.0)-0.01
-	current_max_health=base_max_health*stat_curves[BuffableStats.current_max_health].sample(curve_level_pos)
-	current_defense=base_defense*stat_curves[BuffableStats.current_defense].sample(curve_level_pos)
-	current_attack=base_attack*stat_curves[BuffableStats.current_attack].sample(curve_level_pos)
-	
+	#相当于等级属性
+	#var curve_level_pos:float=(float(level)/100.0)-0.01
+	#current_max_health=base_max_health*stat_curves[BuffableStats.current_max_health].sample(curve_level_pos)
+	#current_defense=base_defense*stat_curves[BuffableStats.current_defense].sample(curve_level_pos)
+	#current_attack=base_attack*stat_curves[BuffableStats.current_attack].sample(curve_level_pos)
+	#
 	##然后将增益值应用到当前基础属性
+	#相当于buff
 	for stat in stat_multipliers:
 		set(stat,get(stat)*stat_multipliers[stat])
 	for stat in stat_addends:
-		#print(stat)
-		#print(stat_addends,"99")
 		set(stat,get(stat)+stat_addends[stat])
 	pass

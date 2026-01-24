@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq0mwjrj4rnvo"]
+
+[ext_resource type="Script" uid="uid://06eo3twu7y7b" path="res://scenes/juicy_bar/juciy_bar.gd" id="1_3kof2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cr1so"]
+bg_color = Color(0.14509805, 0.17254902, 0.17254902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buh8q"]
+bg_color = Color(0.9411765, 0.8117647, 0.17254902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15g31"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s645x"]
+bg_color = Color(0.8862745, 0.17254902, 0.19215687, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="JuciyBar" type="Control" node_paths=PackedStringArray("top_layer_bar", "bottom_layer_bar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -733.0
+offset_bottom = -512.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3kof2")
+top_layer_bar = NodePath("TopBar")
+bottom_layer_bar = NodePath("BottomBar")
+
+[node name="BottomBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 226.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cr1so")
+theme_override_styles/fill = SubResource("StyleBoxFlat_buh8q")
+show_percentage = false
+
+[node name="TopBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 226.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_15g31")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s645x")
+value = 20.0
+show_percentage = false
