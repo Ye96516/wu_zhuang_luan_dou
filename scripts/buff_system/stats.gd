@@ -18,7 +18,7 @@ enum BuffableStats{
 #const base_level_xp:float=100
 
 signal health_depleted
-signal health_changed(current_health:float,max_health:float)
+signal health_changed(current_health:float,max_health:float,)
 signal attri_change(n:String,v:float,flag:StatBuff.BuffType)
 
 @export var speed:float=200
@@ -47,10 +47,10 @@ func _init() -> void:
 func setup_stats():
 	health=current_max_health
 
-func _health_set(v:float):
-	health=clampf(v,0,current_max_health)
-	health_changed.emit(health,current_max_health)
-	#print(v,"stats")
+func _health_set(current_health:float):
+	var value:float=current_health-health
+	health=clampf(current_health,0,current_max_health)
+	
 	if health<=0:
 		health_depleted.emit()
 

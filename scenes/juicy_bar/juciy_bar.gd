@@ -10,7 +10,8 @@ var	current_value:float
 func	 _ready():
 	pass	#	Replace	with	function	body.
 
-#为了避免再ready中调用的时序问题，所以改用外部调用
+##为了避免再ready中调用的时序问题，所以改用外部调用
+##初始化横条值
 func init_value(min_v:float,max_v:float):
 	min_value=min_v
 	max_value=max_v

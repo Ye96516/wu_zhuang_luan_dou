@@ -17,8 +17,10 @@ func process_update(_delta: float) -> void:
 	#切换
 	if Input.is_action_just_pressed("atk"):
 		state_machine.change_state("Attack")
-	if Input.is_action_just_pressed("jump"):
+	if player.can_jump:
 		state_machine.change_state("Jump")
+	if player.should_hurt:
+		state_machine.change_state("Hurt")
 	pass
 
 ## 物理帧触发

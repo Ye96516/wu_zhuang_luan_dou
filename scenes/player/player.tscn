@@ -185,7 +185,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"atk",
-"speed": 10.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -200,9 +200,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vqdpl")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -297,6 +297,13 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5wq2"]
+radius = 31.0
+height = 68.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7s0f"]
+size = Vector2(22, 65)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_err40"]
 radius = 5.333336
 height = 16.0
@@ -305,19 +312,12 @@ height = 16.0
 atlas = ExtResource("7_yj68g")
 region = Rect2(41, 39, 15, 18)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c5wq2"]
-radius = 31.0
-height = 68.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7s0f"]
-size = Vector2(22, 65)
-
 [sub_resource type="Animation" id="Animation_i3ckl"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D:disabled")
+tracks/0/path = NodePath("ShouldFlip/StateMachine/Attack/Atk/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -329,7 +329,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D2:disabled")
+tracks/1/path = NodePath("ShouldFlip/StateMachine/Attack/Atk/CollisionShape2D2:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -340,7 +340,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_jgela"]
-length = 0.6
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -360,7 +360,7 @@ tracks/1/path = NodePath("ShouldFlip/Soldier:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.1747037, 0.2170196, 0.25665647),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -368,11 +368,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D:disabled")
+tracks/2/path = NodePath("ShouldFlip/StateMachine/Attack/Atk/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.10424339, 0.51010907),
+"times": PackedFloat32Array(0.10424339, 0.23333333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -380,7 +380,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("StateMachine/Attack/Atk/CollisionShape2D2:disabled")
+tracks/3/path = NodePath("ShouldFlip/StateMachine/Attack/Atk/CollisionShape2D2:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -565,9 +565,69 @@ unique_name_in_owner = true
 [node name="Soldier" type="AnimatedSprite2D" parent="ShouldFlip"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_rt1l8")
-animation = &"idle"
-frame = 3
+animation = &"atk"
 metadata/_edit_lock_ = true
+
+[node name="StateMachine" type="Node2D" parent="ShouldFlip" node_paths=PackedStringArray("current_state")]
+script = ExtResource("9_cnsyf")
+current_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://cwou0iticoms2"
+
+[node name="Idle" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("10_007i1")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Run" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("11_6cv16")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Attack" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("12_j4nxn")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Atk" type="Area2D" parent="ShouldFlip/StateMachine/Attack"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShouldFlip/StateMachine/Attack/Atk"]
+position = Vector2(26, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_c5wq2")
+disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ShouldFlip/StateMachine/Attack/Atk"]
+position = Vector2(-9.5, 20)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_n7s0f")
+disabled = true
+
+[node name="Jump" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("13_28m0y")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Hurt" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("14_uniwh")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
+
+[node name="Death" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
+script = ExtResource("15_iqsei")
+player = NodePath("../../..")
+an = NodePath("../../Soldier")
+anp = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://csu4mc8j6cktt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -588,7 +648,7 @@ layout_mode = 0
 offset_left = 2.0
 offset_top = 4.0
 offset_right = 17.0
-offset_bottom = 44.0
+offset_bottom = 22.0
 scale = Vector2(4, 4)
 texture = SubResource("AtlasTexture_kvlxm")
 stretch_mode = 2
@@ -627,71 +687,11 @@ bbcode_enabled = true
 text = "1000/1000"
 horizontal_alignment = 2
 
-[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("current_state")]
-script = ExtResource("9_cnsyf")
-current_state = NodePath("Idle")
-metadata/_custom_type_script = "uid://cwou0iticoms2"
-
-[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("10_007i1")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Run" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("11_6cv16")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Attack" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("12_j4nxn")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Atk" type="Area2D" parent="StateMachine/Attack"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StateMachine/Attack/Atk"]
-position = Vector2(26, 0)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_c5wq2")
-disabled = true
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StateMachine/Attack/Atk"]
-position = Vector2(-9.5, 20)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_n7s0f")
-disabled = true
-
-[node name="Jump" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("13_28m0y")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Hurt" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("14_uniwh")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
-[node name="Death" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("player", "an", "anp")]
-script = ExtResource("15_iqsei")
-player = NodePath("../..")
-an = NodePath("../../ShouldFlip/Soldier")
-anp = NodePath("../../AnimationPlayer")
-metadata/_custom_type_script = "uid://csu4mc8j6cktt"
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_m8h78")
 }
 
-[connection signal="body_entered" from="StateMachine/Attack/Atk" to="StateMachine/Attack" method="_on_atk_body_entered"]
-[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="ShouldFlip/StateMachine/Attack/Atk" to="ShouldFlip/StateMachine/Attack" method="_on_atk_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="ShouldFlip/StateMachine/Attack" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="ShouldFlip/StateMachine/Hurt" method="_on_animation_player_animation_finished"]

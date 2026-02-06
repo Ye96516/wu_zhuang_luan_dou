@@ -5,6 +5,7 @@ extends StateBase
 ## 进入状态
 func enter() -> void:
 	super()
+	#player.current_jump_time-=1
 	player.velocity.y=player.stat.jump_speed
 	pass
 
@@ -21,6 +22,9 @@ func process_update(_delta: float) -> void:
 		state_machine.change_state("Attack")
 	if player.dir:
 		state_machine.change_state("Run")
+	if player.can_jump:
+		state_machine.change_state("Jump")
+		
 	pass
 
 ## 物理帧触发

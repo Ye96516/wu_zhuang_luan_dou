@@ -8,6 +8,7 @@ var label_setting:LabelSettings
 const font = preload("uid://c62d4rqemmh3j")
 
 func _ready() -> void:
+	#player.stat.health_depleted.connect(a)
 	#初始化buff的UI和信号连接
 	_init_buff_ui()
 	#初始化生命值的UI和信号连接
@@ -23,6 +24,8 @@ func _health_change(current_h:float,max_h:float):
 	hp_bar.change_current_value(current_h)
 	hp_value.text="[color=orange]"+str(int(current_h))+"[/color]"+\
 	"/"+"[color=red]"+str(int(max_h))+"[/color]"
+	#if 
+	#player.should_hurt=true
 					
 
 func _init_buff_ui():

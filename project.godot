@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="武装乱斗"
+run/main_scene="uid://shmt45ftwigv"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Debug="*res://scenes/debug/debug.tscn"
 
 [display]
 
@@ -25,7 +30,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/agent/plugin.cfg")
+enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/agent/plugin.cfg", "res://addons/main/plugin.cfg")
 
 [global_group]
 
