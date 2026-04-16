@@ -2,6 +2,7 @@ extends StateBase
 
 @export var player:Player
 
+
 ## 进入状态
 func enter() -> void:
 	super()
@@ -24,7 +25,6 @@ func physical_process_update(_delta: float) -> void:
 		player.velocity.x = player.dir * player.stat.speed
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.stat.speed)
-	
 	pass
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -38,10 +38,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_atk_body_entered(body: Node2D) -> void:
 	#print(body.name)
 	if body.is_in_group("enemy"):
-		print("aaaajjjj")
+		#print("aaaajjjj")
 		var atk:StatBuff=StatBuff.new(Stats.BuffableStats.health\
 		,-player.stat.current_attack,StatBuff.BuffType.add)
 		body.stat.add_buff(atk)
-		print(body.stat.health)
+		#print(body.stat.health)
 		pass
 	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dwc6dbmonm20m"]
+[gd_scene load_steps=52 format=3 uid="uid://dwc6dbmonm20m"]
 
 [ext_resource type="Script" uid="uid://btvxjam7pkbj5" path="res://scenes/goblin/goblin.gd" id="1_tqjei"]
 [ext_resource type="Script" uid="uid://b1n3ebufmi5bo" path="res://scripts/buff_system/stats.gd" id="2_3g7k3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://di0vhjakp7p6l" path="res://scenes/goblin/Idle.gd" id="9_sxuw3"]
 [ext_resource type="Script" uid="uid://dcuk4l7fxr4qo" path="res://scenes/goblin/atk.gd" id="10_2qjm0"]
 [ext_resource type="Script" uid="uid://ddgre2fq48rx8" path="res://scenes/level1/patrol.gd" id="11_lecn7"]
+[ext_resource type="Script" uid="uid://dln6a43d31k63" path="res://scenes/goblin/death.gd" id="12_3g7k3"]
 [ext_resource type="PackedScene" uid="uid://bq0mwjrj4rnvo" path="res://scenes/juicy_bar/juciy_bar.tscn" id="12_6dmvp"]
 
 [sub_resource type="Resource" id="Resource_jmggy"]
@@ -298,7 +299,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_iscdl"]
 length = 0.5714286
-loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -418,7 +418,7 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8702e"]
-radius = 11.0
+radius = 23.0
 height = 54.0
 
 [node name="Goblin" type="CharacterBody2D" groups=["enemy"]]
@@ -430,8 +430,7 @@ stat = SubResource("Resource_jmggy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ShouldFlip"]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_nj8u8")
-animation = &"atk"
-frame = 6
+animation = &"idle"
 
 [node name="StateMachine" type="Node2D" parent="ShouldFlip" node_paths=PackedStringArray("current_state") groups=["enemy"]]
 script = ExtResource("8_ajgyt")
@@ -464,22 +463,27 @@ an = NodePath("../../AnimatedSprite2D")
 anp = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://csu4mc8j6cktt"
 
+[node name="Death" type="Node2D" parent="ShouldFlip/StateMachine" node_paths=PackedStringArray("anp")]
+script = ExtResource("12_3g7k3")
+anp = NodePath("../../../AnimationPlayer")
+
 [node name="HitPlayer" type="RayCast2D" parent="ShouldFlip"]
 unique_name_in_owner = true
 position = Vector2(3, 12)
-target_position = Vector2(31, 1)
+target_position = Vector2(42, -1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_v4nxl")
 }
 
-[node name="HealthBar" parent="." instance=ExtResource("12_6dmvp")]
+[node name="HealthBar" parent="." node_paths=PackedStringArray("target") instance=ExtResource("12_6dmvp")]
 offset_left = -32.0
 offset_top = -22.0
 offset_right = -32.0
 offset_bottom = -22.0
 scale = Vector2(0.3, 0.4)
+target = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 13)

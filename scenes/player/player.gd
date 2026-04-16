@@ -8,11 +8,13 @@ var dir:float
 
 var should_hurt:bool
 
+#关于跳跃的参数
 var can_jump:bool
 var jump_time:int=2
 var current_jump_time:int=1
 
 func _ready() -> void:
+
 	pass
 	
 func _physics_process(delta: float) -> void:
@@ -28,7 +30,7 @@ func _physics_process(delta: float) -> void:
 		current_jump_time-=1
 	else:
 		can_jump=false
-	print(current_jump_time)
+	#print(current_jump_time)
 	
 
 	dir = Input.get_axis("move_left", "move_right")

@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://c3fll78wm84ag"
+path="res://.godot/imported/死亡音效.sfxr-b086a3434abedb90add6d87aca16126e.sample"
+
+[deps]
+
+source_file="res://art/sound/死亡音效.sfxr"
+dest_files=["res://.godot/imported/死亡音效.sfxr-b086a3434abedb90add6d87aca16126e.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

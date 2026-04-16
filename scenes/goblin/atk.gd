@@ -28,6 +28,8 @@ func physical_process_update(_delta: float) -> void:
 	pass
 
 func _animation_finished(_animation:StringName):
+	if state_machine.current_state==$"../Death":
+		return
 	anp.play("idle")
 	await get_tree().create_timer(pause_time).timeout
 	if hit_player.is_colliding():

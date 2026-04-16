@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://blnx0r10rprtm"]
+[gd_scene load_steps=68 format=3 uid="uid://blnx0r10rprtm"]
 
 [ext_resource type="Script" uid="uid://bprnvrjq6a0o" path="res://scenes/player/player.gd" id="1_myrg7"]
 [ext_resource type="Script" uid="uid://b1n3ebufmi5bo" path="res://scripts/buff_system/stats.gd" id="2_kvlxm"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://culmep4syst0n" path="res://scenes/player/state_meshine/jump.gd" id="13_28m0y"]
 [ext_resource type="Script" uid="uid://7cn8lvhsvrtt" path="res://scenes/player/state_meshine/hurt.gd" id="14_uniwh"]
 [ext_resource type="Script" uid="uid://dvqoqa280cs2h" path="res://scenes/player/state_meshine/death.gd" id="15_iqsei"]
+[ext_resource type="Script" uid="uid://bxj0alcgmd45h" path="res://scenes/state_show/state_show.gd" id="18_uf5tr"]
 
 [sub_resource type="Resource" id="Resource_kvlxm"]
 script = ExtResource("2_kvlxm")
@@ -384,7 +385,7 @@ tracks/3/path = NodePath("ShouldFlip/StateMachine/Attack/Atk/CollisionShape2D2:d
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.10424339, 0.51010907),
+"times": PackedFloat32Array(0.10424339, 0.26666668),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -561,11 +562,12 @@ stat = SubResource("Resource_kvlxm")
 
 [node name="ShouldFlip" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, -21)
 
 [node name="Soldier" type="AnimatedSprite2D" parent="ShouldFlip"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_rt1l8")
-animation = &"atk"
+animation = &"idle"
 metadata/_edit_lock_ = true
 
 [node name="StateMachine" type="Node2D" parent="ShouldFlip" node_paths=PackedStringArray("current_state")]
@@ -630,7 +632,7 @@ anp = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://csu4mc8j6cktt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -3)
+position = Vector2(0, -24)
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_err40")
 
@@ -640,8 +642,8 @@ script = ExtResource("9_myrg7")
 [node name="LeftTopUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 304.0
+offset_bottom = 78.0
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/LeftTopUI"]
 layout_mode = 0
@@ -653,7 +655,7 @@ scale = Vector2(4, 4)
 texture = SubResource("AtlasTexture_kvlxm")
 stretch_mode = 2
 
-[node name="HPBar" parent="CanvasLayer/LeftTopUI" instance=ExtResource("10_kvlxm")]
+[node name="HPBar" parent="CanvasLayer/LeftTopUI" node_paths=PackedStringArray("target") instance=ExtResource("10_kvlxm")]
 unique_name_in_owner = true
 layout_mode = 0
 anchors_preset = 0
@@ -665,6 +667,7 @@ offset_right = 296.0
 offset_bottom = 72.0
 grow_horizontal = 1
 grow_vertical = 1
+target = NodePath("../../..")
 
 [node name="HP" type="Label" parent="CanvasLayer/LeftTopUI"]
 layout_mode = 0
@@ -691,6 +694,10 @@ horizontal_alignment = 2
 libraries = {
 &"": SubResource("AnimationLibrary_m8h78")
 }
+
+[node name="StateShow" type="CanvasLayer" parent="."]
+script = ExtResource("18_uf5tr")
+metadata/_custom_type_script = "uid://bxj0alcgmd45h"
 
 [connection signal="body_entered" from="ShouldFlip/StateMachine/Attack/Atk" to="ShouldFlip/StateMachine/Attack" method="_on_atk_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="ShouldFlip/StateMachine/Attack" method="_on_animation_player_animation_finished"]
